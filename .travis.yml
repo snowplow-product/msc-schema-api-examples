@@ -1,5 +1,5 @@
 language: generic
-if: "(type = push AND (branch IN (master, develop) OR tag IS present)) OR type IN (pull_request, api, cron)"
+if: "(type = push AND branch IN (master, develop)) OR type IN (pull_request, api, cron)"
 jdk:
 - openjdk8
 services:
