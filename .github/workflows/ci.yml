@@ -38,11 +38,14 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: Extract branch name
+    - name: Extract branch and environment
       run: |
           export BRANCH=$(if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then echo $GITHUB_BASE_REF; else echo $GITHUB_REF; fi)
           echo "Target branch is $BRANCH"
           echo "::set-env name=BRANCH::$BRANCH"
+          export ENV=$(if [ "$BRANCH" = "master" ]; then echo "PROD"; else echo "DEV"; fi)
+          echo "Target environment is $ENV"
+          echo "::set-env name=ENV::$ENV"
 
     - name: Set up JDK 11
       uses: actions/setup-java@v1
@@ -70,7 +73,7 @@ jobs:
         --audience $AUDIENCE \
         --username $USERNAME \
         --password $PASSWORD \
-        --environment $(if [ "$BRANCH" = "master" ]; then echo "PROD"; else echo "DEV"; fi)
+        --environment 
 
   deploy:
     runs-on: ubuntu-latest
@@ -82,4 +85,4 @@ jobs:
     - uses: actions/checkout@v2
     
     - name: Deploy
-      run: echo "Pretending to deploy..."
+      run: echo "Pretending to deploy to $ENV..."
