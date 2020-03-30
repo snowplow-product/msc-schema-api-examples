@@ -18,7 +18,7 @@ jobs:
     name: Build
     script: echo "Pretending to build and push artifacts..."
   - stage: Deploy
-    if: type = push AND branch IN (master, develop)
+    if: branch IN (master, develop)
     name: Deployment
     env:
     - ENV=$(if [ "$TRAVIS_BRANCH" = "master" ]; then echo "PROD"; else echo "DEV"; fi)
