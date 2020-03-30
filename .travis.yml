@@ -17,15 +17,19 @@ jobs:
   - stage: Build
     name: Build
     script: echo "Pretending to build and push artifacts..."
-  - stage: Deploy
+  - stage: Deployment Requirements
     if: branch IN (master, develop)
-    name: Deployment
+    name: Check Deployment Requirements
     env:
     - ENV=$(if [ "$TRAVIS_BRANCH" = "master" ]; then echo "PROD"; else echo "DEV"; fi)
     script:
     - 'amm scripts/verify-schema-deployment.sc --manifestPath $TRAVIS_BUILD_DIR/snowplow-schemas.json
       --organizationId $ORGANIZATION_ID --clientId $CLIENT_ID --clientSecret $CLIENT_SECRET
       --audience $AUDIENCE --username $USERNAME --password $PASSWORD --environment $ENV'
+  - stage: Deploy
+    if: type = push AND branch IN (master, develop)
+    name: Deployment
+    script: echo "Prepare deployment..."
     deploy:
       skip_cleanup: true
       provider: script
