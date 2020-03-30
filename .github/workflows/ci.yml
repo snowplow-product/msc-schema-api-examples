@@ -57,7 +57,7 @@ jobs:
         PASSWORD: ${{ secrets.USER_PASSWORD }}
       run: |
         amm scripts/verify-schema-deployment.sc \
-        --manifestPath $TRAVIS_BUILD_DIR/snowplow-schemas.json \
+        --manifestPath $GITHUB_WORKSPACE/snowplow-schemas.json \
         --organizationId $ORGANIZATION_ID \
         --clientId $CLIENT_ID \
         --clientSecret $CLIENT_SECRET \
