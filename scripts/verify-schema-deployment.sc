@@ -79,8 +79,8 @@ private def verifySchemaDeployment(apiBaseUrl: String,
     .flatMap(results =>
       ZIO
         .fromEither(Either.fromOption(results.flatten.toNel.map(DeploymentCheckFailure(environment, _)), ()).swap)
+        .zipRight(putStrLn("All schemas are deployed! You are good to go."))
         .tapError(e => putStrLn(s"Deployment check failed! ${e.getMessage}"))
-        .as(putStrLn("All schemas are deployed! You are good to go."))
     )
 
 case class DeploymentCheckFailure(environment: String, schemas: NonEmptyList[Schema.Metadata]) extends Exception {

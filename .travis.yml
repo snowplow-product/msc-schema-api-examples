@@ -27,9 +27,11 @@ jobs:
       --organizationId $ORGANIZATION_ID --clientId $CLIENT_ID --clientSecret $CLIENT_SECRET
       --audience $AUDIENCE --username $USERNAME --password $PASSWORD --environment $ENV'
     deploy:
-      cleanup: 
+      skip_cleanup: true
       provider: script
       script: echo "Pretending to deploy..."
+      on:
+        condition: type = push AND branch IN (master, develop)
 env:
   global:
   - ORGANIZATION_ID="75ea1aeb-4379-4958-8cbb-1a5cefbb4d29"
