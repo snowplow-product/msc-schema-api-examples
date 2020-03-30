@@ -73,7 +73,8 @@ jobs:
         --audience $AUDIENCE \
         --username $USERNAME \
         --password $PASSWORD \
-        --environment $ENV
+        --environment $ENV \
+        2>/dev/null
 
   deploy:
     runs-on: ubuntu-latest
