@@ -7,6 +7,12 @@
         "name": "example_event",
         "format": "jsonschema",
         "version": "1-0-0"
+      },
+      {
+        "vendor": "com.snplow.msc.ci",
+        "name": "another_example_event",
+        "format": "jsonschema",
+        "version": "1-0-0"
       }
     ]
   }
