@@ -1,0 +1,42 @@
+language: generic
+if: "(type = push AND (branch IN (master, develop) OR tag IS present)) OR type IN (pull_request, api, cron)"
+jdk:
+- openjdk8
+services:
+- docker
+before_install:
+- sudo sh -c '(echo "#!/usr/bin/env sh" && curl -L https://github.com/lihaoyi/Ammonite/releases/download/2.0.4/2.13-2.0.4) /usr/local/bin/amm && chmod +x /usr/local/bin/amm'
+
+jobs:
+  include:
+  - stage: Tests
+    name: Unit Tests
+    script: echo "Pretending to run unit tests..."
+  - name: Integration Tests
+    script: echo "Pretending to run integration tests..."
+  - stage: Build & Release
+    name: Build
+    script: echo "Pretending to build artifacts..."
+  - name: Release
+    script: echo "Pretending to release artifacts..."
+  - stage: Deploy
+    if: type = push AND branch IN (master, develop)
+    name: Verify deployment requirements
+    env:
+    - ENV=$(if [ "$TRAVIS_BRANCH" = "master" ]; then echo "PROD"; else echo "DEV"; fi)
+    script:
+    - 'amm scripts/verify-schema-deployment.sc --manifestPath $TRAVIS_BUILD_DIR/snowplow-schemas.json
+      --organizationId $ORGANIZATION_ID --clientId $CLIENT_ID --clientSecret $CLIENT_SECRET
+      --audience $AUDIENCE --username $USERNAME --password $PASSWORD --environment $ENV'
+    deploy:
+      cleanup: 
+      provider: script
+      script: echo "Pretending to deploy..."
+env:
+  global:
+  - ORGANIZATION_ID="75ea1aeb-4379-4958-8cbb-1a5cefbb4d29"
+  - CLIENT_ID="YCE5aZubvHRZ7hqF0B1XxwRR3cAApu9G"
+  - AUDIENCE="https://snowplowanalytics.com/api/"
+  - USERNAME="YCE5aZubvHRZ7hqF0B1XxwRR3cAApu9G@costas.gr"
+  - secure: kwGGaurPUM1nXbrqb97afXhFeHxnXFh5vz1V8uLF5SsThE97jh6vE6m/xS1WTtQAhl6ihHPTpBXPbpvhLbw92giH0WL7pNYk35FH3ShbEJJCvaxusEBAQiCb1sFCK1R/n4H4p6db8MA7zK42+uPDcJr4PJv9oKqU8bD19zJTmWVkx6RJ/6tm3HjkdaSvJiAHOJkfCeDnVzgKasEP2xW4rkrbhekTiHPcHf4GHTA40ta6PODsxbbQo1W0W71BHuKSXlVVNFKdmuXDnBEPA62j09cDacbnXJjs8ji9WrJhiLLWna6tHOYRoMxqh+72ZvZXq9zqmapIgJ/BHEMvanEviheYs70L440iNYoJwv106fewSCpaJe49SMxXfOtkBKvGGkhu4DxBcgLHPDO+0cVxXUEKy6Hzer85JjwsV2e2hKllfUiWAXdQ/eKPV4NmqAaVgh11W34/SvFuF3BJnGsYsiohh8o6RLeol17ULO0zT0W8kcZSzgprw1vyfaQ0YBGEJz4oTEVyqfn7Tf+pX01kdhOMOpqoEYU+kXsi/h/cKxCx+e72i6mZvEPImKo+zO8JT6fT/Ui6f7waQ0qkyMN+cVbDGT0ylugOAwWniOQOuXqVl2ojtFTbbmQa9AusLz4BqT3y1NEx0uZq36xRItlnOPgbr57F8VsWio6TYOIG5Gk=
+  - secure: Xmrn5z2xP9puWrgptoVjQ6lO+rstUHWdsyHzhJCY8PMxBxgCCcuULQ/ayGokwo64xC7gG2WVc+zvpL3OFvIU3i0ym+SbLYC8TWSJL0tb/FgN8q6Zsx3yixzB1DQKVcxYAflwFBSNIHMmQr+phL8jDIYj+ZEMMRcdSqVdPvr+dSI7vIk/BIIDfCpDQMheTSQP7qMQrm93UhnbOXDNJdZDI+hnO2owa02Lp+12x8A2GPFDJv/ibU8b5/NFH1ibIrDyMyvoz/Uz6RWY8M3WJlZCTuNqWzOy9HZ2ZH603I2V5YB6QOXosycnGDT81eqz2XSgYUWDnJjjCyOTqpc+qOvfPovWeRTALreG1EiNRiAUgYXJBtzm2l1cqGK74w4vPfJzYT4EWBfbLC7BK0xGzH/f1G8bVR+vDdb/8IW39Cw/KFxINhIz9uwxoJGJ5oxknQHNLO4rXVpKvbwJwfuUsngbNavv7SFVl7DMIFyXxQ1aoe5psEolAKq9RT2JodBvoP4+gcLgcaMMTrFdGBcxOyOhJNsEl6QigsLKS4ccYS5q7TWoeuV25AYImjzOdndVxfNgvmiBOJj24/ThlGgWcPbIA0F7zwt3GQZdymmnIeeH82AHMde6BtKujZZy+4XP6EB2QU3+qk9oX6zmI0VPNF0cPCAfCVlD4gdd2ECDWO/B0XA=
