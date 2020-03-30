@@ -33,7 +33,7 @@ jobs:
   deploy-requirements:
     runs-on: ubuntu-latest
     name: Verify deployment requirements
-    if: (github.event_name == 'pull_request' && contains([ 'master', 'develop' ], github.base_ref)) || (github.event_name == 'push' && contains([ 'master', 'develop' ], github.ref))
+    if: (github.event_name == 'pull_request' && (github.base_ref == 'master' || github.base_ref == 'develop')) || (github.event_name == 'push' && (github.ref == 'master' || github.ref == 'develop'))
 
     steps:
     - uses: actions/checkout@v2
@@ -69,7 +69,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     name: Deploy
-    if: github.event_name == 'push' && contains([ 'master', 'develop' ], github.ref
+    if: github.event_name == 'push' && (github.ref == 'master' || github.ref == 'develop')
     needs: [ build, deploy-requirements ]
 
     steps:
