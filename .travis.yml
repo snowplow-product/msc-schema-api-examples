@@ -25,7 +25,7 @@ jobs:
     script:
     - 'amm scripts/verify-schema-deployment.sc --manifestPath $TRAVIS_BUILD_DIR/snowplow-schemas.json
       --organizationId $ORGANIZATION_ID --clientId $CLIENT_ID --clientSecret $CLIENT_SECRET
-      --audience $AUDIENCE --username $USERNAME --password $PASSWORD --environment $ENV'
+      --audience $AUDIENCE --username $USERNAME --password $PASSWORD --environment $ENV 2>/dev/null'
   - stage: Deploy
     if: type = push AND branch IN (master, develop)
     name: Deployment

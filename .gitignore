@@ -1,3 +1,18 @@
+## Scala
+.idea
+*.iml
+*.class
+*.log
+target/
+project/project/
+project/boot/
+logs/
+lib_managed/
+project/build/
+.bloop/
+.metals/
+metals.sbt
+
 ## Generic
 *~
 *.lock
