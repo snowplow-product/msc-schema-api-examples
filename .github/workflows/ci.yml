@@ -52,29 +52,17 @@ jobs:
       with:
         java-version: 11
     
-    - name: Install dependencies
-      run: |
-        sudo sh -c '(echo "#!/usr/bin/env sh" && curl -L https://github.com/lihaoyi/Ammonite/releases/download/2.0.4/2.13-2.0.4) > /usr/local/bin/amm && chmod +x /usr/local/bin/amm'
-    
-    - name: Verify all used schemas are deployed
-      env: 
-        ORGANIZATION_ID: 75ea1aeb-4379-4958-8cbb-1a5cefbb4d29
-        CLIENT_ID: YCE5aZubvHRZ7hqF0B1XxwRR3cAApu9G
-        CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-        AUDIENCE: https://snowplowanalytics.com/api/
-        USERNAME: YCE5aZubvHRZ7hqF0B1XxwRR3cAApu9G@costas.gr
-        PASSWORD: ${{ secrets.USER_PASSWORD }}
-      run: |
-        amm scripts/verify-schema-deployment.sc \
-        --manifestPath $GITHUB_WORKSPACE/snowplow-schemas.json \
-        --organizationId $ORGANIZATION_ID \
-        --clientId $CLIENT_ID \
-        --clientSecret $CLIENT_SECRET \
-        --audience $AUDIENCE \
-        --username $USERNAME \
-        --password $PASSWORD \
-        --environment $ENV \
-        2>/dev/null
+    - name: Run Snowplow's Schema CI
+      uses: snowplow-product/msc-schema-ci-action/check@master
+      with:
+        manifest-path: 'snowplow-schemas.json'            
+        organization-id: 75ea1aeb-4379-4958-8cbb-1a5cefbb4d29
+        auth-client-id: YCE5aZubvHRZ7hqF0B1XxwRR3cAApu9G
+        auth-client-secret: ${{ secrets.CLIENT_SECRET }}
+        auth-audience: https://snowplowanalytics.com/api/
+        auth-username: YCE5aZubvHRZ7hqF0B1XxwRR3cAApu9G@costas.gr
+        auth-password: ${{ secrets.USER_PASSWORD }}
+        environment: ${{ env.ENV }}
 
   deploy:
     runs-on: ubuntu-latest
