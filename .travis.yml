@@ -5,7 +5,7 @@ jdk:
 services:
 - docker
 before_install:
-- curl -L "http://dl.bintray.com/snowplow/snowplow-generic/schema_ci_0.1.0.zip" | jar xv > /usr/local/bin/schema-ci && chmod +x /usr/local/bin/schema-ci
+- sudo sh -c '(echo "#!/usr/bin/env sh" && curl -L http://dl.bintray.com/snowplow/snowplow-generic/schema_ci_0.1.0.zip) | jar xv > /usr/local/bin/schema-ci && chmod +x /usr/local/bin/schema-ci'
 
 jobs:
   include:
