@@ -5,7 +5,7 @@ jdk:
 services:
 - docker
 before_install:
-- sudo sh -c '(echo "#!/usr/bin/env sh" && curl -L http://dl.bintray.com/snowplow/snowplow-generic/schema_ci_0.1.0.zip) | jar xv > /usr/local/bin/schema-ci && chmod +x /usr/local/bin/schema-ci'
+- curl -L http://dl.bintray.com/snowplow/snowplow-generic/schema_ci_0.1.0.zip | jar xv && chmod +x ./schema-ci
 
 jobs:
   include:
@@ -23,7 +23,7 @@ jobs:
     env:
     - ENV=$(if [ "$TRAVIS_BRANCH" = "master" ]; then echo "PROD"; else echo "DEV"; fi)
     script:
-    - 'schema-ci check --manifestPath $TRAVIS_BUILD_DIR/snowplow-schemas.json
+    - './schema-ci check --manifestPath $TRAVIS_BUILD_DIR/snowplow-schemas.json
       --organizationId $ORGANIZATION_ID --clientId $CLIENT_ID --clientSecret $CLIENT_SECRET
       --audience $AUDIENCE --username $USERNAME --password $PASSWORD --environment $ENV 2>/dev/null'
   - stage: Deploy
