@@ -55,7 +55,7 @@ jobs:
     - name: Run Snowplow's Schema CI
       uses: snowplow-product/msc-schema-ci-action/check@master
       with:
-        manifest-path: 'snowplow-schemas.json'            
+        manifest-path: ${{ format('{0}/{1}', github.workspace, 'snowplow-schemas.json' ) }}            
         organization-id: 75ea1aeb-4379-4958-8cbb-1a5cefbb4d29
         auth-client-id: YCE5aZubvHRZ7hqF0B1XxwRR3cAApu9G
         auth-client-secret: ${{ secrets.CLIENT_SECRET }}
