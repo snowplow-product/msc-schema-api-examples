@@ -47,18 +47,13 @@ jobs:
           echo "Target environment is $ENV"
           echo "::set-env name=ENV::$ENV"
     
-    - name: Run Snowplow's Schema CI
-      uses: snowplow-product/msc-schema-ci-action/check@master
+    - name: Run Snowplow's Data Structures CI
+      uses: snowplow-product/msc-schema-ci-action/check@v0.3.0
       with:
         manifest-path: snowplow-schemas.json
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         environment: ${{ env.ENV }}
-      env:
-        AUTH_SERVER_BASE_URL: https://snowplow-next.eu.auth0.com
-        API_BASE_URL: https://next.console.snowplowanalytics.com
-        AUTH_CLIENT_ID: ${{ secrets.CLIENT_ID }}
-        AUTH_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
 
   deploy:
     runs-on: ubuntu-latest
