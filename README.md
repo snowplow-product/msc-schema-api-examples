@@ -26,7 +26,7 @@ while the Travis CI pipeline serves as a universal example for non-GitHub CI/CD 
 
 ### GitHub Actions
 The GitHub Actions workflow setup consists in adding the [Data Structures CI Github Action](https://github.com/snowplow-product/msc-schema-ci-action) as a step of a job.
-See [ci.yml](.github/workflows/ci-yml) for an example and the Action's repo for reference and configuration.
+See [ci.yml](.github/workflows/ci.yml) for an example and the Action's repo for reference and configuration.
 
 ### Universal (e.g. Travis CI, CircleCI, Gitlab, Azure Pipelines, Jenkins...)
 The universal/generic approach (for non-GitHub CI/CD solutions) is based on an executable Java artifact (JAR) which can be run directly as a CLI application.
