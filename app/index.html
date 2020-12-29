@@ -49,7 +49,7 @@
         function trackExampleEvent() {
             alert("Sent an example event");
             window.snowplow('trackSelfDescribingEvent', {
-                schema: 'iglu:com.snplow.msc.gcp/example_event/jsonschema/1-0-7',
+                schema: 'iglu:com.snplow.msc.ci/example_event/jsonschema/1-0-0',
                 data: {
                     example_field_1: "This is an example field",
                     job_role: "Software Engineer"

@@ -25,7 +25,7 @@ jobs:
     script:
     - echo "Environment is $ENV"
     - './data-structures-ci check --manifestPath $TRAVIS_BUILD_DIR/snowplow-schemas.json
-      --username $USERNAME --password $PASSWORD --environment $ENV 2>/dev/null'
+      --username $SNOWPLOW_USERNAME --password $SNOWPLOW_PASSWORD --environment $ENV 2>/dev/null'
   - stage: Deploy
     if: type = push AND branch IN (master, develop)
     name: Deployment
@@ -36,8 +36,4 @@ jobs:
       script: echo "Pretending to deploy..."
       on:
         condition: type = push AND branch IN (master, develop)
-env:
-  global:
-  - secure: "Qb7FAkw4rjvY3FeVseVEI/f4zP4hpsHPGBuQh6mdJWTdrPhACq0svyBzYgsfGAgeryrgx5j6iN0ODJVRDX2oDqyY9/OvLZMHPTrTCtmfp9B0ipgyy7Zg0SqXb1wAlv3wlpPCEVB9UuCKvLQddE8kxqWSTaRZU+SIVD8JQhywkSfH7gJB2u9tAfGNIg0nCBZBtlMW5oiYAXl22sA8c3GzuJwNILK3j0z/SmVr5Pyi5up7OFMi0YIFTo4H7ZMjzKAYv+vh9GQzgYALRODx0g04eV0BV28wL+OqE4fqf8J8gnYWWDPmtEM7Yr4JW6QNf3URv5BLrzqMRolU9ypt2lMYiLm6gJ3IHfkTliGwVjO1DNxzB/EME0Nm1zjAI4ohndgEXu8idFkBsrlPW96XAffGdsUks1/NY6sykuZca5ceKQDYEqehE9fwUL1qD6Wlmm5FpHoeDdWYuwlrNuqymmZ7xA66QqION2BVxm38mscuMYLvvtQ7+FiXCG1HgncjE9jKn7KAgIa8D88KpkeTVvmk8I6IzKCgzGvhPZwfhSJJAn2xxKT4gAxEHCX2N1m+96j3NLyCYK7nkaGZAwtm/USGQzOMMooQHbUvwWObhKeXhMxEf8X4ZZT2Hfb5SfHiwMssHlzTAFnsOzjn+SK91cBTrKRQMM7tifL0zPeBpqyHaTc="
-  - secure: "PhzgnWSxR+h0caveRrH72J2Kdxq+3qwL5LG5/zZlToXS8VkytSPU0JYMTNRESOqbHRZidl7bu5gMPyJ+au4jQua1cMjqflqhfS3re1uYh4gaK+6CR1y5mxLEXv0CNTQR4HdyB2HMOgKlMR9n/sypCGU3+8/R1WIFM5FY1aIFBGEJHeiM2N8j4X8iwPe6i4sSo+D50RijVaPv2o7XTUJg9uNOzkuVJM6h4ya0Yjdxf9iua360aZZaE6Rchyw+mCGf/gsg1V9fV9nLTzfVn6SdHyUYZdUDtHQCkkVjw2Ugoiguc2jPuq4WJOgtWhhya9MhjkhC8vebmmkT94QBHvO6b7mcNI1pq91v0f3s2DKpKc5JMYV7ZTu/ctD+dg7AVOXmr98IEWhJiokFjHF0oAlRnej3T7CDgSqzWbLkmpkIvBRaLEjTEyh2bdQZGMRv/qC3hnZwddhTXIUGoGWmrc6zEvb+UVPAtowjyk+I/PYNnV6GDCas1sbmHklP0vXTC/nnK1t1BA6POizTxr2rr4WG3jJ3pqoScX7kUJMZbZhZFdc0NqDzMm6jBAw7oXbLacHTDFYV7h/f7cy/27FZCrLxasPAUk6OzkUqioIAb9BIwjPW2LFm4DkGYqbn2H1zAZF6Hfv/RfwDtYP60yIgveEagdcjB8H8lG/PH7QTnvLf7Ko="
   

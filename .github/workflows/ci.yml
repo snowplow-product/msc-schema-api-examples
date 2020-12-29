@@ -51,8 +51,8 @@ jobs:
       uses: snowplow-product/msc-schema-ci-action/check@v0.3.1
       with:
         manifest-path: snowplow-schemas.json
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
+        username: ${{ secrets.SNOWPLOW_USERNAME }}
+        password: ${{ secrets.SNOWPLOW_PASSWORD }}
         environment: ${{ env.ENV }}
 
   deploy:
