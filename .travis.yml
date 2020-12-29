@@ -5,7 +5,7 @@ jdk:
 services:
 - docker
 before_install:
-- curl -L https://dl.bintray.com/snowplow/snowplow-generic/data_structures_ci_0.3.0.zip | jar xv && chmod +x ./data-structures-ci
+- curl -L https://dl.bintray.com/snowplow/snowplow-generic/data_structures_ci_0.3.1.zip | jar xv && chmod +x ./data-structures-ci
 
 jobs:
   include:
@@ -21,8 +21,9 @@ jobs:
     if: branch IN (master, develop)
     name: Check Deployment Requirements
     env:
-    - ENV=$(if [ "$TRAVIS_BRANCH" = "master" ]; then echo "PROD"; else echo "DEV"; fi)
+    - ENV=$([[ $TRAVIS_BRANCH == 'master' ]] && echo 'PROD' || echo 'DEV') 
     script:
+    - echo "Environment is $ENV"
     - './data-structures-ci check --manifestPath $TRAVIS_BUILD_DIR/snowplow-schemas.json
       --username $USERNAME --password $PASSWORD --environment $ENV 2>/dev/null'
   - stage: Deploy

@@ -40,15 +40,15 @@ jobs:
     
     - name: Extract branch and environment
       run: |
-          export BRANCH=$(if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then echo $GITHUB_BASE_REF; else echo $GITHUB_REF; fi)
-          echo "Target branch is $BRANCH"
-          echo "::set-env name=BRANCH::$BRANCH"
-          export ENV=$(if [ "$BRANCH" = "master" ]; then echo "PROD"; else echo "DEV"; fi)
-          echo "Target environment is $ENV"
-          echo "::set-env name=ENV::$ENV"
-    
+        BRANCH=$([[ $GITHUB_EVENT_NAME == 'pull_request' ]] && echo $GITHUB_BASE_REF || echo $GITHUB_REF)
+        ENV=$([[ $BRANCH == 'master' ]] && echo 'PROD' || echo 'DEV')
+        echo "Target branch is $BRANCH"
+        echo "Target environment is $ENV"
+        echo "BRANCH=$BRANCH" >> $GITHUB_ENV
+        echo "ENV=$ENV" >> $GITHUB_ENV
+        
     - name: Run Snowplow's Data Structures CI
-      uses: snowplow-product/msc-schema-ci-action/check@v0.3.0
+      uses: snowplow-product/msc-schema-ci-action/check@v0.3.1
       with:
         manifest-path: snowplow-schemas.json
         username: ${{ secrets.USERNAME }}
