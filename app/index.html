@@ -60,7 +60,7 @@
         function trackAnotherEvent() {
             alert("Sent an different event");
             window.snowplow('trackSelfDescribingEvent', {
-                schema: 'iglu:com.snplow.msc.gcp/another_example_event/jsonschema/1-0-0',
+                schema: 'iglu:com.snplow.msc.ci/another_example_event/jsonschema/1-0-0',
                 data: {
                     example_field_2: "This is another example field",
                 }
