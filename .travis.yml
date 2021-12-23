@@ -5,7 +5,7 @@ jdk:
 services:
 - docker
 before_install:
-- curl -L https://github.com/snowplow-product/msc-schema-ci-tool/releases/download/0.3.4/data_structures_ci_0.3.4.zip | jar xv && chmod +x ./data-structures-ci
+- curl -L https://github.com/snowplow-product/msc-schema-ci-tool/releases/download/1.0.0/data_structures_ci_1.0.0.zip | jar xv && chmod +x ./data-structures-ci
 
 jobs:
   include:
@@ -22,10 +22,11 @@ jobs:
     name: Check Deployment Requirements
     env:
     - ENV=$([[ $TRAVIS_BRANCH == 'master' ]] && echo 'PROD' || echo 'DEV') 
+    - ORGANIZATION_ID=$SNOWPLOW_ORG_ID
+    - API_KEY=$SNOWPLOW_API_KEY
     script:
     - echo "Environment is $ENV"
-    - './data-structures-ci check --manifestPath $TRAVIS_BUILD_DIR/snowplow-schemas.json
-      --username $SNOWPLOW_USERNAME --password $SNOWPLOW_PASSWORD --environment $ENV 2>/dev/null'
+    - './data-structures-ci check --manifestPath $TRAVIS_BUILD_DIR/snowplow-schemas.json --environment $ENV 2>/dev/null'
   - stage: Deploy
     if: type = push AND branch IN (master, develop)
     name: Deployment

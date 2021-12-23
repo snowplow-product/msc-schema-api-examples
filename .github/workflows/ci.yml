@@ -48,11 +48,11 @@ jobs:
         echo "ENV=$ENV" >> $GITHUB_ENV
         
     - name: Run Snowplow's Data Structures CI
-      uses: snowplow-product/msc-schema-ci-action/check@v0.3.4
+      uses: snowplow-product/msc-schema-ci-action/check@v1
       with:
+        organization-id: ${{ secrets.SNOWPLOW_ORG_ID }}
+        api-key: ${{ secrets.SNOWPLOW_API_KEY }}
         manifest-path: snowplow-schemas.json
-        username: ${{ secrets.SNOWPLOW_USERNAME }}
-        password: ${{ secrets.SNOWPLOW_PASSWORD }}
         environment: ${{ env.ENV }}
 
   deploy:
